@@ -1,27 +1,35 @@
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
 
 public class PeriodicTableReader {
-    final static private String filepath = "PeriodicTable.txt";           //csv
-    private static String searchTerm;                                    // value searched for in csv
-    private static int multiplier;                                        //coefficient of compounds
-    private static ArrayList<String> elements;                           //elements in a compoun
+    final static private String filepath = "PeriodicTable.txt";                                         // file name of the csv containing elements and some of their properties
+    private static String searchTerm;                                                                   // value to be searched for in csv
+    private static int multiplier;                                                                      // the coefficient of compounds
+    private static boolean found = false;                                                               // used to determnine whether ELement is found in the csv
+    private static String elementName = "";                                                             // used to hold element's name
+    private static String symbol = "";                                                                  // used to hold element's symbol
+    private static String num =  "";                                                                    // used to hold element's Atomic number
+    private static String molarMass = "";                                                               // used to hold element's Atomic mass in g/mol
+    private static List<String> elements;                                                               // used to hold compound's indiviual elements
+    private static HashMap<String, Double> elementAndSubscript = new HashMap<String, Double>();         // used to hold elements and their respective subscripts
 
+    // display's an element's name, symbol, atomic number, and molar mass
     public static void displayELement(String elementSymbol){
         searchTerm = elementSymbol;
-        readRecord();
+        readRecord(elementSymbol);
+        if(found){
+            JOptionPane.showMessageDialog(null, "Element: " + elementName + " \nSymbol: " + symbol + " \nAtomic Num: " + num + " \nMolar Mass: " + molarMass);
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Error: Element Not Found");
+        }
     }
 
-    private static void readRecord(){
-        boolean found = false;
-        String elementName = "";
-        String symbol = "";
-        String num =  "";
-        String molarMass = "";
-        
+    // linearally traverses PeriodicTable.txt
+    public static void readRecord(String elementSymbol){
         try {
             Scanner sc = new Scanner(new File(filepath));
             sc.useDelimiter("[ ,\n]");
@@ -34,42 +42,39 @@ public class PeriodicTableReader {
                 found = symbol.equals(searchTerm) ? true : false;
             }
 
-            if(found){
-                JOptionPane.showMessageDialog(null, "Element: " + elementName + " \nSymbol: " + symbol + " \nAtomic Num: " + num + " \nMolar Mass: " + molarMass);
-            }
         } 
         catch (Exception e) {
-            
+            System.out.println("Error: Filepath Not Found");
         }
     }
 
-    public static double compoundMolarMass(String compound){
-        double totalMolarMass = 0.0;
-        parseCompound(compound);
-        
-        if(Character.isDigit(elements.get(0).charAt(0))){
-            multiplier = elements.get(0).charAt(0);
-        }
+    /*
+     * The Following methods are getters and setter for various fields that need to be accessed outside of this class
+     */
 
-        for(int i = Character.isDigit(elements.get(0).charAt(0)) ? 1 : 0; i < elements.size(); i++){
-            
-        }
-
-        
-        return totalMolarMass;
+    public static List<String> getElements(){
+        return elements;
     }
 
-    private static void parseCompound(String compound){
-        
-        if(Character.isDigit(compound.charAt(0))){
-             multiplier = compound.charAt(0);
-        }
-
-        String[] tempElements = compound.split("(?=\\p{Upper})");
-        //TODO: delete for loop that was used for testing
-        for(String ele: tempElements)
-            System.out.println(ele);
-        elements = new ArrayList<String>(Arrays.asList(tempElements));
-
+    public static void setElements(List<String> elements) {
+        PeriodicTableReader.elements = elements;
     }
+
+
+    public static int getMultiplier() {
+        return multiplier;
+    }
+
+    public static void setMultiplier(int multiplier) {
+        PeriodicTableReader.multiplier = multiplier;
+    }
+
+    public static HashMap<String, Double> getElementAndSubscript() {
+        return elementAndSubscript;
+    }
+
+    public static void setElementAndSubscript(HashMap<String, Double> elementAndSubscript) {
+        PeriodicTableReader.elementAndSubscript = elementAndSubscript;
+    }
+    
 }

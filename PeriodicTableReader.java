@@ -14,12 +14,12 @@ public class PeriodicTableReader {
     private static String num =  "";                                                                    // used to hold element's Atomic number
     private static String molarMass = "";                                                               // used to hold element's Atomic mass in g/mol
     private static List<String> elements;                                                               // used to hold compound's indiviual elements
-    private static HashMap<String, Double> elementAndSubscript = new HashMap<String, Double>();         // used to hold elements and their respective subscripts
+    private static HashMap<String, Integer> elementAndSubscript = new HashMap<String, Integer>();       // used to hold elements and their respective subscripts
 
     // display's an element's name, symbol, atomic number, and molar mass
     public static void displayELement(String elementSymbol){
         searchTerm = elementSymbol;
-        readRecord(elementSymbol);
+        searchTable(elementSymbol);
         if(found){
             JOptionPane.showMessageDialog(null, "Element: " + elementName + " \nSymbol: " + symbol + " \nAtomic Num: " + num + " \nMolar Mass: " + molarMass);
         }
@@ -29,7 +29,7 @@ public class PeriodicTableReader {
     }
 
     // linearally traverses PeriodicTable.txt
-    public static void readRecord(String elementSymbol){
+    public static void searchTable(String elementSymbol){
         try {
             Scanner sc = new Scanner(new File(filepath));
             sc.useDelimiter("[ ,\n]");
@@ -69,12 +69,12 @@ public class PeriodicTableReader {
         PeriodicTableReader.multiplier = multiplier;
     }
 
-    public static HashMap<String, Double> getElementAndSubscript() {
+    public static HashMap<String, Integer> getElementAndSubscript() {
         return elementAndSubscript;
     }
 
-    public static void setElementAndSubscript(HashMap<String, Double> elementAndSubscript) {
-        PeriodicTableReader.elementAndSubscript = elementAndSubscript;
+    public static void setElementAndSubscript(int subscript, String element) {
+        elementAndSubscript.put(element, subscript);
     }
     
 }

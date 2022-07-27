@@ -9,7 +9,7 @@ public class MeanDeviation {
     private static double mean = 0;
     private static double rsd = 0;
 
-    //helper method that collects data and stores in an arraylist to be used later by other helper methods
+    // collects data and stores in an arraylist to be used later by other helper methods
     private static void gatherData(Scanner sc){
         System.out.print("How Many numbers do you have? ");
         amountOfData = sc.nextInt();
@@ -21,7 +21,7 @@ public class MeanDeviation {
         System.out.flush();
     }
 
-    //method that calculates the relative standard deviation(RSD)
+    // calculates the relative standard deviation(RSD)
     private static double calcRSD(){
         for(int i = 0; i < amountOfData; i++){
             rsd += Math.pow((data.get(i) - mean), 2);
@@ -32,7 +32,7 @@ public class MeanDeviation {
         return rsd;
     }
 
-    //method that calculates the mean then returns it
+    // calculates the mean then returns it
     private static double calcMean(){
         for(int i = 0; i < amountOfData; i++){
             mean += data.get(i);
@@ -42,7 +42,7 @@ public class MeanDeviation {
         return mean;
     }
 
-    //method that prints both the mean and relative standard deviation
+    // prints both the mean and relative standard deviation
     public static void printMeanDeviation(Scanner sc){
         gatherData(sc);
         System.out.println("Mean: "+ calcMean());

@@ -5,7 +5,7 @@ import java.util.Scanner;
 import javax.swing.JOptionPane;
 
 public class PeriodicTableReader {
-    final static private String filepath = "PeriodicTable.txt";                                         // file name of the csv containing elements and some of their properties
+    final static private String FILEPATH = "PeriodicTable.txt";                                         // file name of the csv containing elements and some of their properties
     private static String searchTerm;                                                                   // value to be searched for in csv
     private static int multiplier;                                                                      // the coefficient of compounds
     private static boolean found = false;                                                               // used to determnine whether ELement is found in the csv
@@ -31,7 +31,7 @@ public class PeriodicTableReader {
     // linearally traverses PeriodicTable.txt
     public static void searchTable(String elementSymbol){
         try {
-            Scanner sc = new Scanner(new File(filepath));
+            Scanner sc = new Scanner(new File(FILEPATH));
             sc.useDelimiter("[ ,\n]");
 
             while(sc.hasNext() && !found){
@@ -44,7 +44,7 @@ public class PeriodicTableReader {
 
         } 
         catch (Exception e) {
-            System.out.println("Error: Filepath Not Found");
+            System.out.println("Error: FILEPATH Not Found");
         }
     }
 
